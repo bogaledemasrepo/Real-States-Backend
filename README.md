@@ -74,7 +74,9 @@ Configure the following variables in your .env file:
 
     PORT - Server port (default: 3000)
 
-    POSTGRESQL_DB_URI - MongoDB connection string
+    REAL_STATES_DATABASE_URL - PostgreSQL remote connection string
+
+    REAL_STATES_DATABASE_LOCAL_URL - PostgreSQL local connection string
 
     JWT_SECRET - Secret key for JWT tokens
 
