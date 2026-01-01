@@ -5,7 +5,12 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // Debugging: This should now show your URLs
-console.log('Local DB URL:', process.env.NODE_ENV=="production"? process.env.REAL_STATES_DATABASE_URL!:process.env.REAL_STATES_DATABASE_LOCAL_URL!);
+console.log(
+  'Local DB URL:',
+  process.env.NODE_ENV == 'production'
+    ? process.env.REAL_STATES_DATABASE_URL!
+    : process.env.REAL_STATES_DATABASE_LOCAL_URL!,
+);
 
 export default defineConfig({
   schema: './models/schema.ts',
@@ -13,6 +18,9 @@ export default defineConfig({
   dialect: 'postgresql',
   dbCredentials: {
     // We use a simple fallback logic here
-    url:process.env.NODE_ENV=="production"? process.env.REAL_STATES_DATABASE_URL!:process.env.REAL_STATES_DATABASE_LOCAL_URL!,
+    url:
+      process.env.NODE_ENV == 'production'
+        ? process.env.REAL_STATES_DATABASE_URL!
+        : process.env.REAL_STATES_DATABASE_LOCAL_URL!,
   },
 });

@@ -9,14 +9,14 @@ app.use(express.json());
 app.post('/agents', async (req, res) => {
   try {
     const newAgent = req.body;
-    
+
     // MAKE SURE THIS LINE EXISTS AND IS AWAITED
-    await db.insert(agentTable).values(newAgent); 
-    
-    res.status(201).json({ message: "Agent created" });
+    await db.insert(agentTable).values(newAgent);
+
+    res.status(201).json({ message: 'Agent created' });
   } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: "Failed to create" });
+    console.log(error);
+    res.status(500).json({ error: 'Failed to create' });
   }
 });
 
