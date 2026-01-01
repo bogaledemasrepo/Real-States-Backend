@@ -1,0 +1,44 @@
+name: Bun Express CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        # bun install is much faster and uses a bun.lockb file
+        run: bun install --frozen-lockfile
+
+      - name: Lint code
+        run: bun run lint # Assumes you have a lint script in package.json
+
+      - name: Run Tests
+        # Bun has a built-in fast test runner
+        run: bun test
+
+      - name: Run Drizzle Check
+        # Ensure your schema matches your migrations without connecting to DB
+        run: bunx drizzle-kit check
+
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Server
+        # You can use SSH, Docker, or a Platform Webhook here
+        run: |
+          echo "Deploying to production..."
+          # Example: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
