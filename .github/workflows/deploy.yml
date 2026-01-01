@@ -9,6 +9,22 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    
+    # 1. Start a temporary Postgres DB for the tests
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v4
 
@@ -18,18 +34,29 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        # bun install is much faster and uses a bun.lockb file
         run: bun install --frozen-lockfile
 
       - name: Lint code
-        run: bun run lint # Assumes you have a lint script in package.json
+        run: bun run lint
+
+      # 2. Sync the DB schema before running tests
+      - name: Drizzle Push
+        run: bunx drizzle-kit push
+        env:
+          # Use the local service DB defined above
+          REAL_STATES_DATABASE_LOCAL_URL: postgres://postgres:password@localhost:5432/test_db
+          REAL_STATES_DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+          NODE_ENV: development
 
       - name: Run Tests
-        # Bun has a built-in fast test runner
         run: bun test
+        env:
+          # Pass the service DB URL so your db.ts can connect to it
+          REAL_STATES_DATABASE_LOCAL_URL: postgres://postgres:password@localhost:5432/test_db
+          REAL_STATES_DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+          NODE_ENV: development
 
       - name: Run Drizzle Check
-        # Ensure your schema matches your migrations without connecting to DB
         run: bunx drizzle-kit check
 
   deploy:
@@ -38,7 +65,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to Server
-        # You can use SSH, Docker, or a Platform Webhook here
         run: |
           echo "Deploying to production..."
-          # Example: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+          # Add your actual deploy command here
