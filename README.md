@@ -1,7 +1,7 @@
 # Real-states-backend
 
-
 ## Features
+
     1. TypeScript support
     2. Express.js web framework
     3. PostgreSQL with Drizzle ORM
@@ -14,6 +14,7 @@
     3. PostgreSQl (local or cloud instance)
 
 ## Installation
+
     Set up environment variables: Edit the .env file with your configuration values.
 
     1. Clone the repository:
@@ -28,10 +29,10 @@
     3. Development
         Generate database based on schema
         bun run db:generate
-        
-        Migrate database 
+
+        Migrate database
         bun run db:migrate
-        
+
         Start the development server with hot reload:
         bun run dev
 
@@ -56,7 +57,9 @@
         Run tests in watch mode:
 
         bun run test:watch
+
 ## Project structure
+
     /
     ├── controllers/     # Route controllers
     ├── models/         # Mongoose models
@@ -73,6 +76,7 @@
     bun start - Start the production server
     bun test - Run tests
     bun run test:watch - Run tests in watch mode
+
 ## Environment Variables
 
 Configure the following variables in your .env file:

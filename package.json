@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "bun --watch index.ts",
     "start": "bun index.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
     "test": "bun test",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
@@ -13,11 +16,16 @@
     "db:generate": "bunx drizzle-kit generate --config=drizzle.config.ts"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@types/bun": "latest",
     "@types/pg": "^8.16.0",
     "@types/supertest": "^6.0.3",
     "drizzle-kit": "^0.31.8",
-    "supertest": "^7.1.4"
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.7.4",
+    "supertest": "^7.1.4",
+    "typescript-eslint": "^8.51.0"
   },
   "peerDependencies": {
     "typescript": "^5"

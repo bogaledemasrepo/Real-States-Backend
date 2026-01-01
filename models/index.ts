@@ -12,6 +12,10 @@ if (!process.env.REAL_STATES_DATABASE_LOCAL_URL) {
 }
 
 // Initialize postgres-js client
-const client = postgres(process.env.NODE_ENV=="development"?process.env.REAL_STATES_DATABASE_LOCAL_URL!:process.env.REAL_STATES_DATABASE_URL!);
+const client = postgres(
+  process.env.NODE_ENV == 'development'
+    ? process.env.REAL_STATES_DATABASE_LOCAL_URL!
+    : process.env.REAL_STATES_DATABASE_URL!,
+);
 // Initialize Drizzle ORM with schema and logging
-export  default drizzle(client, { schema, logger: true });
+export default drizzle(client, { schema, logger: true });
