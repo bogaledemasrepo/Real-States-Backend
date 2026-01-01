@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 import request from 'supertest';
-import app from '../index';
+import app from '../app';
 import db from '../models/index';
 import { agentTable } from '../models/schema';
 import { eq } from 'drizzle-orm';

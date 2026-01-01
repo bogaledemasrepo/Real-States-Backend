@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 import request from 'supertest';
-import app from '../index';
+import app from '../app';
 
 describe('Backend API', () => {
   it('should return 200 on health check', async () => {

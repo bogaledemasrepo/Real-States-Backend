@@ -1,27 +1,9 @@
-import express from 'express';
-import db from './models';
-import { agentTable } from './models/schema';
-const app = express();
+import app from './app'; // Import the app you just shared
 
-app.use(express.json());
+const PORT = process.env.PORT || 3000;
 
-// Ensure this route exists!
-app.post('/agents', async (req, res) => {
-  try {
-    const newAgent = req.body;
-
-    // MAKE SURE THIS LINE EXISTS AND IS AWAITED
-    await db.insert(agentTable).values(newAgent);
-
-    res.status(201).json({ message: 'Agent created' });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Failed to create' });
-  }
+app.listen(PORT, () => {
+  console.log(`🚀 Server ready at http://localhost:${PORT}`);
+  console.log(`📄 Documentation: http://localhost:${PORT}/api-docs`);
+  console.log(`🏥 Health Check: http://localhost:${PORT}/health`);
 });
-
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
-});
-
-export default app;
