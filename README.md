@@ -26,10 +26,15 @@
 
 
     3. Development
-
+        Generate database based on schema
+        bun run db:generate
+        
+        Migrate database 
+        bun run db:migrate
+        
         Start the development server with hot reload:
-
         bun run dev
+
     4. Building
 
         Build the project for production:

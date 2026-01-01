@@ -3,6 +3,12 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "dev": "bun --watch index.ts",
+    "start":"bun index.ts",
+    "db:migrate": "bunx drizzle-kit migrate --config=drizzle.config.ts",
+    "db:generate": "bunx drizzle-kit generate --config=drizzle.config.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/pg": "^8.16.0",
