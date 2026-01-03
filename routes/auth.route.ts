@@ -1,11 +1,12 @@
 import express  from 'express';
-import { getPasswordResetLink, login, register } from '../controllers/auth.controllers';
+import { authController } from '../controllers/auth.controllers';
 
 const authRouter = express.Router();
 
 
-authRouter.post('/login',express.json(),login)
-.post('/register',express.json(),register)
-.post('/forget-password',express.json(),getPasswordResetLink)
+authRouter.post('/login',express.json(),authController.signIn)
+.post('/register',express.json(),authController.signUp)
+.post('/forget-password',express.json(),authController.sendPasswordResetLink)
+.post('/reset/:str',express.json(),authController.resetPassword)
 
 export default authRouter;
