@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import {
   pgTable,
   text,
@@ -9,12 +10,11 @@ import {
   date,
   pgEnum,
 } from 'drizzle-orm/pg-core';
-import { relations, sql } from 'drizzle-orm';
 
 // 0. Enums
 export const userRoleEnum = pgEnum('user_role', ['ADMIN', 'CUSTOMER', 'AGENT']);
 
-// 1. Users Table (The Base Identity)
+// 1. Users Table
 export const usersTable = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: text('name').notNull(),
@@ -27,7 +27,7 @@ export const usersTable = pgTable('users', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
-// 2. Profile Table (User Details)
+// 2. Profile Table
 export const profileTable = pgTable('profile', {
   userId: uuid('user_id')
     .primaryKey()
@@ -35,24 +35,9 @@ export const profileTable = pgTable('profile', {
     .notNull(),
   bio: text('bio'),
   birthDate: date('birth_date'),
-  photos: text('photos')
-    .array()
-    .default(sql`ARRAY[]::text[]`),
 });
 
-// 3. Agent Extension Table
-// Only rows exist here if user.role === 'AGENT'
-export const agentTable = pgTable('agents', {
-  userId: uuid('user_id')
-    .primaryKey()
-    .references(() => usersTable.id, { onDelete: 'cascade' })
-    .notNull(),
-  phone: varchar('phone', { length: 20 }),
-  type: varchar('type', { length: 50 }).default('owner'),
-  // We removed 'name', 'email', and 'avatar' here because they live in usersTable
-});
-
-// 4. Properties Table (Linked to the Agent entry)
+// 3. Properties Table
 export const propertyTable = pgTable('properties', {
   id: uuid('id').primaryKey().defaultRandom(),
   name: varchar('name', { length: 255 }).notNull(),
@@ -66,10 +51,11 @@ export const propertyTable = pgTable('properties', {
   image: text('image'),
   geolocation: jsonb('geolocation'),
   galleries: text('galleries').array(),
-  agentId: uuid('agent_id').references(() => agentTable.userId), // References the agent's userId
+  agentId: uuid('agent_id').references(() => usersTable.id, { onDelete: 'set null' }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
-// 5. Reviews Table
+// 4. Reviews Table
 export const reviewTable = pgTable('reviews', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id')
@@ -77,35 +63,47 @@ export const reviewTable = pgTable('reviews', {
     .notNull(),
   rating: doublePrecision('rating').notNull(),
   content: text('content'),
-  propertyId: uuid('property_id').references(() => propertyTable.id),
+  propertyId: uuid('property_id').references(() => propertyTable.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
 // --- RELATIONS ---
 
-export const userRelations = relations(usersTable, ({ one, many }) => ({
+// Users Relations: Link to profile, properties (as agent), and reviews (as author)
+export const usersRelations = relations(usersTable, ({ one, many }) => ({
   profile: one(profileTable, {
     fields: [usersTable.id],
     references: [profileTable.userId],
   }),
-  agentData: one(agentTable, {
-    fields: [usersTable.id],
-    references: [agentTable.userId],
-  }),
-  reviews: many(reviewTable),
+  properties: many(propertyTable), 
+  reviews: many(reviewTable),      
 }));
 
-export const agentRelations = relations(agentTable, ({ one, many }) => ({
+// Profile Relations: Back link to the owner user
+export const profileRelations = relations(profileTable, ({ one }) => ({
   user: one(usersTable, {
-    fields: [agentTable.userId],
+    fields: [profileTable.userId],
     references: [usersTable.id],
   }),
-  properties: many(propertyTable),
 }));
 
+// Property Relations: Link to the agent and the collection of reviews
 export const propertyRelations = relations(propertyTable, ({ one, many }) => ({
-  agent: one(agentTable, {
+  agent: one(usersTable, {
     fields: [propertyTable.agentId],
-    references: [agentTable.userId],
+    references: [usersTable.id],
   }),
   reviews: many(reviewTable),
+}));
+
+// Review Relations: Link to both the reviewer and the property being reviewed
+export const reviewRelations = relations(reviewTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [reviewTable.userId],
+    references: [usersTable.id],
+  }),
+  property: one(propertyTable, {
+    fields: [reviewTable.propertyId],
+    references: [propertyTable.id],
+  }),
 }));
