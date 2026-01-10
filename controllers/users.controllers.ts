@@ -14,20 +14,22 @@ export const userController = {
   getAllUser: async (req: Request, res: Response) => {
     try {
       // Selecting specific columns to avoid sending sensitive data like password
-      const users = await db.select({
-        id: usersTable.id,
-        name: usersTable.name,
-        email: usersTable.email,
-        avatar: usersTable.avatar,
-        role: usersTable.role,
-        createdAt: usersTable.createdAt
-      }).from(usersTable);
+      const users = await db
+        .select({
+          id: usersTable.id,
+          name: usersTable.name,
+          email: usersTable.email,
+          avatar: usersTable.avatar,
+          role: usersTable.role,
+          createdAt: usersTable.createdAt,
+        })
+        .from(usersTable);
 
       res.status(200).json(users);
     } catch (error) {
-        console.log(error)
-        console.log(error)
-      res.status(500).json({ error: "Failed to fetch users" });
+      console.log(error);
+      console.log(error);
+      res.status(500).json({ error: 'Failed to fetch users' });
     }
   },
 
@@ -44,25 +46,28 @@ export const userController = {
       const limit = parseInt(req.query.limit as string) || 10;
       const offset = (page - 1) * limit;
 
-      const data = await db.select()
+      const data = await db
+        .select()
         .from(usersTable)
         .limit(limit)
         .offset(offset);
 
       // Simple count query for total metadata
-      const totalCount = await db.select({ count: sql<number>`count(*)` }).from(usersTable);
+      const totalCount = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(usersTable);
 
       res.status(200).json({
         data,
         meta: {
           total: totalCount[0]?.count,
           page,
-          limit
-        }
+          limit,
+        },
       });
     } catch (error) {
-        console.log(error)
-      res.status(500).json({ error: "Pagination query failed" });
+      console.log(error);
+      res.status(500).json({ error: 'Pagination query failed' });
     }
   },
 
@@ -76,17 +81,20 @@ export const userController = {
   getUserDetail: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;
-      if(!userId) throw new Error("Please provide userId");
-      const [user] = await db.select().from(usersTable).where(eq(usersTable.id, userId));
+      if (!userId) throw new Error('Please provide userId');
+      const [user] = await db
+        .select()
+        .from(usersTable)
+        .where(eq(usersTable.id, userId));
 
-      if (!user) return res.status(404).json({ message: "User not found" });
+      if (!user) return res.status(404).json({ message: 'User not found' });
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...safeUser } = user; // Strip password
       res.status(200).json(safeUser);
     } catch (error) {
-        console.log(error)
-      res.status(500).json({ error: "Error retrieving user" });
+      console.log(error);
+      res.status(500).json({ error: 'Error retrieving user' });
     }
   },
 
@@ -100,20 +108,22 @@ export const userController = {
   updateUserDetail: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;
-      if(!userId) throw new Error("Please provide userId");
+      if (!userId) throw new Error('Please provide userId');
       const body = req.body;
 
-      const [updatedUser] = await db.update(usersTable)
+      const [updatedUser] = await db
+        .update(usersTable)
         .set(body)
         .where(eq(usersTable.id, userId))
         .returning();
 
-      if (!updatedUser) return res.status(404).json({ message: "User not found" });
+      if (!updatedUser)
+        return res.status(404).json({ message: 'User not found' });
 
       res.status(200).json(updatedUser);
     } catch (error) {
-        console.log(error)
-      res.status(500).json({ error: "Update failed" });
+      console.log(error);
+      res.status(500).json({ error: 'Update failed' });
     }
   },
 
@@ -127,13 +137,13 @@ export const userController = {
   deleteUserDetail: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;
-      if(!userId) throw new Error("Please provide userId");
+      if (!userId) throw new Error('Please provide userId');
       await db.delete(usersTable).where(eq(usersTable.id, userId));
 
       res.status(204).send();
     } catch (error) {
-        console.log(error)
-      res.status(500).json({ error: "Deletion failed" });
+      console.log(error);
+      res.status(500).json({ error: 'Deletion failed' });
     }
   },
 };

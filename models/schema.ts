@@ -51,7 +51,9 @@ export const propertyTable = pgTable('properties', {
   image: text('image'),
   geolocation: jsonb('geolocation'),
   galleries: text('galleries').array(),
-  agentId: uuid('agent_id').references(() => usersTable.id, { onDelete: 'set null' }),
+  agentId: uuid('agent_id').references(() => usersTable.id, {
+    onDelete: 'set null',
+  }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
@@ -63,7 +65,9 @@ export const reviewTable = pgTable('reviews', {
     .notNull(),
   rating: doublePrecision('rating').notNull(),
   content: text('content'),
-  propertyId: uuid('property_id').references(() => propertyTable.id, { onDelete: 'cascade' }),
+  propertyId: uuid('property_id').references(() => propertyTable.id, {
+    onDelete: 'cascade',
+  }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
@@ -75,8 +79,8 @@ export const usersRelations = relations(usersTable, ({ one, many }) => ({
     fields: [usersTable.id],
     references: [profileTable.userId],
   }),
-  properties: many(propertyTable), 
-  reviews: many(reviewTable),      
+  properties: many(propertyTable),
+  reviews: many(reviewTable),
 }));
 
 // Profile Relations: Back link to the owner user

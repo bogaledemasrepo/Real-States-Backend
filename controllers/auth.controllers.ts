@@ -27,8 +27,8 @@ export const forgotPasswordSchema = z.object({
 });
 
 export const resetPasswordSchema = z.object({
-  token: z.string().min(1, "Token is required"),
-  newPassword: z.string().min(6, "Password must be at least 6 characters"),
+  token: z.string().min(1, 'Token is required'),
+  newPassword: z.string().min(6, 'Password must be at least 6 characters'),
 });
 // Infer types from Zod schemas for extra safety
 export type RegisterInput = z.infer<typeof registerSchema>;
@@ -132,7 +132,7 @@ export const authController = {
       res.status(500).json({ message: 'Internal server error' });
     }
   },
-sendPasswordResetLink: async (req: Request, res: Response) => {
+  sendPasswordResetLink: async (req: Request, res: Response) => {
     try {
       const { email } = forgotPasswordSchema.parse(req.body);
 
@@ -143,30 +143,39 @@ sendPasswordResetLink: async (req: Request, res: Response) => {
 
       // Security Tip: Even if user doesn't exist, return 200 to prevent "Email Enumeration"
       if (!user) {
-        return res.json({ message: "If an account exists, a reset link has been sent." });
+        return res.json({
+          message: 'If an account exists, a reset link has been sent.',
+        });
       }
 
       // 2. Generate a random token
       const resetToken = crypto.randomBytes(32).toString('hex');
-      const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-      
+      const hashedToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+
       // 3. Store hashed token and expiry (e.g., 1 hour from now)
-      await db.update(usersTable)
+      await db
+        .update(usersTable)
         .set({
           resetToken: hashedToken,
-          resetTokenExpires: addHours(new Date(), 1), 
+          resetTokenExpires: addHours(new Date(), 1),
         })
         .where(eq(usersTable.id, user.id));
 
       // 4. Send Email (Pseudo-code)
       const resetUrl = `https://yourfrontend.com/reset-password?token=${resetToken}`;
-      console.log(`Email sent to ${email}: ${resetUrl}`); 
+      console.log(`Email sent to ${email}: ${resetUrl}`);
       // await sendEmail({ to: email, subject: "Reset Password", html: `<a href="${resetUrl}">Reset</a>` });
 
-      res.json({ message: "If an account exists, a reset link has been sent." });
+      res.json({
+        message: 'If an account exists, a reset link has been sent.',
+      });
     } catch (error) {
-      if (error instanceof z.ZodError) return res.status(400).json({ error: error.message });
-      res.status(500).json({ message: "Internal server error" });
+      if (error instanceof z.ZodError)
+        return res.status(400).json({ error: error.message });
+      res.status(500).json({ message: 'Internal server error' });
     }
   },
 
@@ -175,24 +184,31 @@ sendPasswordResetLink: async (req: Request, res: Response) => {
       const { token, newPassword } = resetPasswordSchema.parse(req.body);
 
       // 1. Hash the incoming token to compare with DB
-      const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+      const hashedToken = crypto
+        .createHash('sha256')
+        .update(token)
+        .digest('hex');
 
       // 2. Find user with valid token and check expiry
       const user = await db.query.usersTable.findFirst({
-        where: (users, { and, eq, gt }) => and(
-          eq(users.resetToken, hashedToken),
-          gt(users.resetTokenExpires, new Date()) // Check if expiry is in the future
-        ),
+        where: (users, { and, eq, gt }) =>
+          and(
+            eq(users.resetToken, hashedToken),
+            gt(users.resetTokenExpires, new Date()), // Check if expiry is in the future
+          ),
       });
 
       if (!user) {
-        return res.status(400).json({ message: "Invalid or expired reset token" });
+        return res
+          .status(400)
+          .json({ message: 'Invalid or expired reset token' });
       }
 
       // 3. Hash new password and clear token fields
       const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
 
-      await db.update(usersTable)
+      await db
+        .update(usersTable)
         .set({
           password: hashedPassword,
           resetToken: null,
@@ -200,10 +216,11 @@ sendPasswordResetLink: async (req: Request, res: Response) => {
         })
         .where(eq(usersTable.id, user.id));
 
-      res.json({ success: true, message: "Password updated successfully" });
+      res.json({ success: true, message: 'Password updated successfully' });
     } catch (error) {
-      if (error instanceof z.ZodError) return res.status(400).json({ error: error.message });
-      res.status(500).json({ message: "Internal server error" });
+      if (error instanceof z.ZodError)
+        return res.status(400).json({ error: error.message });
+      res.status(500).json({ message: 'Internal server error' });
     }
-  }
+  },
 };

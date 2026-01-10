@@ -7,11 +7,14 @@ export const propertyController = {
   // 1. Create a new property
   createProperty: async (req: Request, res: Response) => {
     try {
-      const newProperty = await db.insert(propertyTable).values(req.body).returning();
+      const newProperty = await db
+        .insert(propertyTable)
+        .values(req.body)
+        .returning();
       return res.status(201).json(newProperty[0]);
     } catch (error) {
-        console.log(error)
-      return res.status(500).json({ error: "Failed to create property" });
+      console.log(error);
+      return res.status(500).json({ error: 'Failed to create property' });
     }
   },
 
@@ -25,8 +28,8 @@ export const propertyController = {
       });
       return res.json(properties);
     } catch (error) {
-        console.log(error)
-      return res.status(500).json({ error: "Failed to fetch properties" });
+      console.log(error);
+      return res.status(500).json({ error: 'Failed to fetch properties' });
     }
   },
 
@@ -34,21 +37,23 @@ export const propertyController = {
   getPropertyById: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      if (!id) return res.status(400).json({ error: "Property ID is required" });
+      if (!id)
+        return res.status(400).json({ error: 'Property ID is required' });
       const property = await db.query.propertyTable.findFirst({
         where: eq(propertyTable.id, id),
         with: {
           reviews: {
-            with: { user: { columns: { name: true, avatar: true } } }
-          }
+            with: { user: { columns: { name: true, avatar: true } } },
+          },
         },
       });
 
-      if (!property) return res.status(404).json({ error: "Property not found" });
+      if (!property)
+        return res.status(404).json({ error: 'Property not found' });
       return res.json(property);
     } catch (error) {
-        console.log(error)
-      return res.status(500).json({ error: "Error fetching property" });
+      console.log(error);
+      return res.status(500).json({ error: 'Error fetching property' });
     }
   },
 
@@ -56,17 +61,18 @@ export const propertyController = {
   updateProperty: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      if (!id) return res.status(400).json({ error: "Property ID is required" });
+      if (!id)
+        return res.status(400).json({ error: 'Property ID is required' });
       const updated = await db
         .update(propertyTable)
         .set(req.body)
         .where(eq(propertyTable.id, id))
         .returning();
-      
+
       return res.json(updated[0]);
     } catch (error) {
-        console.log(error)
-      return res.status(500).json({ error: "Update failed" });
+      console.log(error);
+      return res.status(500).json({ error: 'Update failed' });
     }
   },
 
@@ -74,12 +80,13 @@ export const propertyController = {
   deleteProperty: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      if (!id) return res.status(400).json({ error: "Property ID is required" });
+      if (!id)
+        return res.status(400).json({ error: 'Property ID is required' });
       await db.delete(propertyTable).where(eq(propertyTable.id, id));
       return res.status(204).send();
     } catch (error) {
-        console.log(error)
-      return res.status(500).json({ error: "Delete failed" });
+      console.log(error);
+      return res.status(500).json({ error: 'Delete failed' });
     }
-  }
+  },
 };
