@@ -25,19 +25,21 @@ export const protect = async (
   }
 
   const token = authHeader.split(' ')[1];
+  console.log(token);
   try {
     const secret = process.env.JWT_SECRET!;
     if (!secret) {
       throw new Error('JWT_SECRET is not set');
     }
     const decoded = jwt.verify(token || '', secret) as {
-      userId: string;
+      sub: string;
+      email: string;
       role: string;
     };
     const [user] = await db
       .select()
       .from(usersTable)
-      .where(eq(usersTable.id, decoded.userId));
+      .where(eq(usersTable.id, decoded.sub));
 
     if (!user) {
       return res.status(401).json({ error: 'Invalid token: user not found' });

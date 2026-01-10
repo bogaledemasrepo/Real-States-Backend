@@ -5,7 +5,7 @@ import { sql } from 'drizzle-orm';
 beforeAll(async () => {
   // Option A: Just empty the tables (Faster)
   // We use TRUNCATE with CASCADE to handle foreign key dependencies
- await db.execute(sql`
+  await db.execute(sql`
   DO $$ 
   BEGIN 
     IF EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'agents') THEN
