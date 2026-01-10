@@ -4,8 +4,7 @@ import app from '../app';
 
 describe('Backend API', () => {
   it('should return 200 on health check', async () => {
-    const res = await request(app).get('/health');
-
+    const res = await request(app).get('/api/v1/health');
     expect(res.status).toBe(200);
     expect(res.body.status).toBe('ok');
   });
