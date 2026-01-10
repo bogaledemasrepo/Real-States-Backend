@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { agentTable, profileTable, usersTable } from '../models/schema';
+import { profileTable, usersTable } from '../models/schema';
 import db from '../models';
 import type { Request, Response } from 'express';
 import { z } from 'zod';
@@ -70,13 +70,6 @@ export const authController = {
         await tx.insert(profileTable).values({
           userId: insertedUser.id,
         });
-
-        if (role === 'AGENT') {
-          await tx.insert(agentTable).values({
-            userId: insertedUser.id,
-          });
-        }
-
         return insertedUser;
       });
 
@@ -104,7 +97,6 @@ export const authController = {
         where: eq(usersTable.email, email),
         with: {
           profile: true,
-          agentData: true,
         },
       });
 

@@ -20,9 +20,6 @@ export const propertyController = {
     try {
       const properties = await db.query.propertyTable.findMany({
         with: {
-          agent: {
-            columns: { password: false, resetToken: false, resetTokenExpires: false } 
-          },
           reviews: true,
         },
       });
@@ -41,7 +38,6 @@ export const propertyController = {
       const property = await db.query.propertyTable.findFirst({
         where: eq(propertyTable.id, id),
         with: {
-          agent: true,
           reviews: {
             with: { user: { columns: { name: true, avatar: true } } }
           }
