@@ -121,7 +121,12 @@ const options = {
     },
   },
   // Path to the API docs (Update these to match your actual file structure)
-  apis: ['./routes/*.ts', './controllers/*.ts', './index.ts'],
+ apis: [
+    './routes/*.ts', 
+    './controllers/*.ts', 
+    './docs/*.ts',     // Path to your new swagger file
+    './index.ts'
+  ],
 };
 
 export const specs = swaggerJsdoc(options);

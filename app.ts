@@ -1,6 +1,6 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import { specs } from './config/swagger';
+import { specs } from './docs/swagger';
 import authRoutes from './routes/auth.route';
 import propertyRoutes from './routes/property.route';
 import userRouter from './routes/users.route';

@@ -3,33 +3,9 @@ import { propertyTable } from '../models/schema';
 import type { Request, Response } from 'express';
 import { eq, sql } from 'drizzle-orm';
 
-/**
- * @openapi
- * components:
- * schemas:
- * Property:
- * type: object
- * properties:
- * id: { type: string, format: uuid }
- * name: { type: string }
- * price: { type: string }
- * address: { type: string }
- * agentId: { type: string, format: uuid }
- */
 
 export const propertyController = {
-  /**
-   * @openapi
-   * /property:
-   * post:
-   * tags: [Properties]
-   * summary: Create a new property
-   * requestBody:
-   * required: true
-   * content:
-   * application/json:
-   * schema: { $ref: '#/components/schemas/Property' }
-   */
+  
   createProperty: async (req: Request, res: Response) => {
     try {
       const newProperty = await db
@@ -43,13 +19,6 @@ export const propertyController = {
     }
   },
 
-  /**
-   * @openapi
-   * /property:
-   * get:
-   * tags: [Properties]
-   * summary: Get all properties
-   */
   getAllProperties: async (req: Request, res: Response) => {
     try {
       const properties = await db.query.propertyTable.findMany({
@@ -67,20 +36,6 @@ export const propertyController = {
     }
   },
 
-  /**
-   * @openapi
-   * /property/paged:
-   * get:
-   * tags: [Properties]
-   * summary: Get paginated properties
-   * parameters:
-   * - in: query
-   * name: page
-   * schema: { type: integer, default: 1 }
-   * - in: query
-   * name: limit
-   * schema: { type: integer, default: 10 }
-   */
   getAllPropertiesPaged: async (req: Request, res: Response) => {
     try {
       const page = parseInt(req.query.page as string) || 1;
@@ -112,13 +67,6 @@ export const propertyController = {
     }
   },
 
-  /**
-   * @openapi
-   * /property/{id}:
-   * get:
-   * tags: [Properties]
-   * summary: Get a single property by ID
-   */
   getPropertyById: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
@@ -139,15 +87,8 @@ export const propertyController = {
       console.log(error)
       return res.status(500).json({ error: 'Error fetching property' });
     }
-  },
+  }, 
 
-  /**
-   * @openapi
-   * /property/{id}:
-   * put:
-   * tags: [Properties]
-   * summary: Update property
-   */
   updateProperty: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
@@ -165,14 +106,6 @@ export const propertyController = {
       return res.status(500).json({ error: 'Update failed' });
     }
   },
-
-  /**
-   * @openapi
-   * /property/{id}:
-   * delete:
-   * tags: [Properties]
-   * summary: Delete property
-   */
   deleteProperty: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;

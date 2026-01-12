@@ -5,6 +5,7 @@ const router = Router();
 
 router.post('/', propertyController.createProperty);
 router.get('/', propertyController.getAllProperties);
+router.get('/paged', propertyController.getAllPropertiesPaged);
 router.get('/:id', propertyController.getPropertyById);
 router.patch('/:id', propertyController.updateProperty);
 router.delete('/:id', propertyController.deleteProperty);
