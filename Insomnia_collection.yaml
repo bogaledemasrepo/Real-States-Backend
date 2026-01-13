@@ -1,14 +1,15 @@
 type: collection.insomnia.rest/5.0
+schema_version: "5.1"
 name: Real State API
 meta:
-  id: wrk_636ab3f4f6b04a11add45d74f1cd31ee
-  created: 1767547127195
-  modified: 1767547127195
+  id: wrk_91a070dc981f4bb7b1cc09c3401c475a
+  created: 1768288126142
+  modified: 1768288126142
   description: ""
 collection:
   - name: Auth
     meta:
-      id: fld_96bb5e4d190a47d586b49c8d17f0afcd
+      id: fld_cf74337a4c19444ab12a5ad46505a142
       created: 1767547145766
       modified: 1767547145766
       sortKey: -1767547145766
@@ -17,7 +18,7 @@ collection:
       - url: "{{ _.base }}/auth/login"
         name: Sign In
         meta:
-          id: req_dbb78911896c47998b110f517f5821e0
+          id: req_14aa974d0b0547988b20d42e273f93b4
           created: 1767547151454
           modified: 1768252870173
           isPrivate: false
@@ -47,7 +48,7 @@ collection:
       - url: "{{ _.base }}/auth/register"
         name: Sign Up
         meta:
-          id: req_d0267c3b1d2e4edb8988b2bab8235cd1
+          id: req_ae9335d7b38a40caa01a9534b5db4c58
           created: 1767547179319
           modified: 1768024387573
           isPrivate: false
@@ -79,7 +80,7 @@ collection:
       - url: ""
         name: Forgot Password
         meta:
-          id: req_b79d433b2f9541bca3476c4bee99e025
+          id: req_c2e67943a30b43829cb8d114cad7b186
           created: 1767547199596
           modified: 1767547241375
           isPrivate: false
@@ -100,7 +101,7 @@ collection:
       - url: ""
         name: Reset Password
         meta:
-          id: req_b1b9acbd2fc74ead8825d4b52032543a
+          id: req_b38fd5bec67c4680a985a9be5075b138
           created: 1767547226022
           modified: 1767547231497
           isPrivate: false
@@ -120,7 +121,7 @@ collection:
           rebuildPath: true
   - name: Real State
     meta:
-      id: fld_8572479d43e14e10a3d88e27aad58009
+      id: fld_31bf966608b74fc1b89b0575918fa210
       created: 1767547272810
       modified: 1767547272810
       sortKey: -1767547272810
@@ -129,7 +130,7 @@ collection:
       - url: "{{ _.base }}/property"
         name: Get Real State
         meta:
-          id: req_4affe76b7c3246c1b43b64460bd17fb2
+          id: req_90d764b2733541b2a70ee95690cfc002
           created: 1767547279390
           modified: 1768031446481
           isPrivate: false
@@ -139,9 +140,7 @@ collection:
         headers:
           - name: User-Agent
             value: insomnia/11.6.2
-            id: pair_575ab097abc0421cac11b8ca7cb3dbb9
-          - id: pair_8b04f75f7c064dc0ac4b0e2af7d6db77
-            name: Authorization
+          - name: Authorization
             value: "{{ _.token }}"
             description: ""
             disabled: false
@@ -156,7 +155,7 @@ collection:
       - url: "{{ _.base }}/property/paged"
         name: Get Real State Paged
         meta:
-          id: req_f5ab27df5cd24a57be53a41f85869618
+          id: req_d745c3b40bfe4de8a47cfbfe46aa1180
           created: 1767547313175
           modified: 1768031484306
           isPrivate: false
@@ -166,9 +165,7 @@ collection:
         headers:
           - name: User-Agent
             value: insomnia/11.6.2
-            id: pair_52f28b6eb0bf47caacd99e71963ded12
-          - id: pair_06a13a377eec44b9ad450364c2f6c117
-            name: Authorization
+          - name: Authorization
             value: "{{ _.token }}"
             description: ""
             disabled: false
@@ -183,7 +180,7 @@ collection:
       - url: ""
         name: Add Real State
         meta:
-          id: req_2b476b0e575c4640a22d18387bf254b3
+          id: req_a9179c1b260a437a8fcd66df1ac44261
           created: 1767547326479
           modified: 1767547329817
           isPrivate: false
@@ -204,7 +201,7 @@ collection:
       - url: ""
         name: Delete Real State
         meta:
-          id: req_029850dd76a44cb3be53bc4006fb175f
+          id: req_bd4781ff705240fe92476af8c5508ae7
           created: 1767547345652
           modified: 1767547349707
           isPrivate: false
@@ -225,7 +222,7 @@ collection:
       - url: ""
         name: Update Real State
         meta:
-          id: req_39c24b6f20c34b72bedbe83d978df533
+          id: req_b92333b021054b29a21b32520499cecf
           created: 1767547364725
           modified: 1767547369285
           isPrivate: false
@@ -245,7 +242,7 @@ collection:
           rebuildPath: true
   - name: Users
     meta:
-      id: fld_322b52456b3b456592238a6c591928a2
+      id: fld_dc2b4fa61e564e79a3c23f8667928c2c
       created: 1767547390204
       modified: 1767547390204
       sortKey: -1767547390204
@@ -254,7 +251,7 @@ collection:
       - url: "{{ _.base }}/users/b3034f35-a000-4fc5-b206-61b3cdc62e4a"
         name: Get User
         meta:
-          id: req_e583eb756fdc4391a006e6e1361740a6
+          id: req_f79a89dbdb2a462cafb2cea381219012
           created: 1767547425358
           modified: 1768031338633
           isPrivate: false
@@ -264,9 +261,7 @@ collection:
         headers:
           - name: User-Agent
             value: insomnia/11.6.2
-            id: pair_77c3953f0cc24378b969bab423c4f971
-          - id: pair_117e904374de47a69653824bc9df0fff
-            name: Authorization
+          - name: Authorization
             value: "{{ _.token }}"
             description: ""
             disabled: false
@@ -281,7 +276,7 @@ collection:
       - url: "{{ _.base }}/users"
         name: Get Users
         meta:
-          id: req_9fd0b17820924d1a8efcd8e943aed9fb
+          id: req_21ebbeb549da494bbd5cf233b6ff9a49
           created: 1767547544001
           modified: 1768031318023
           isPrivate: false
@@ -291,9 +286,7 @@ collection:
         headers:
           - name: User-Agent
             value: insomnia/11.6.2
-            id: pair_619d1e4ef4694676bd3e28b612abd6de
-          - id: pair_60c43ce3f0514f35bedf0cae7e7da82a
-            name: Authorization
+          - name: Authorization
             value: "{{ _.token }}"
             description: ""
             disabled: false
@@ -308,7 +301,7 @@ collection:
       - url: "{{ _.base }}/users/paged"
         name: Get Users Paged
         meta:
-          id: req_945ee680eed14f27a126810353db4113
+          id: req_65ebfedb037547d78267a22729831f86
           created: 1767547612651
           modified: 1768031234151
           isPrivate: false
@@ -318,10 +311,231 @@ collection:
         headers:
           - name: User-Agent
             value: insomnia/11.6.2
-            id: pair_c946d93e318844fcadd01acaed82261b
-          - id: pair_dba5e990c5d8401dac7fd184a86f6fa5
-            name: Authorization
+          - name: Authorization
             value: "{{ _.token }}"
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Bookings
+    meta:
+      id: fld_d339fb91e294431ebe350ba630a13f8d
+      created: 1768296640898
+      modified: 1768296640898
+      sortKey: -1768296640898
+      description: ""
+    children:
+      - url: "{{ _.base }}/users"
+        name: Get Bookings
+        meta:
+          id: req_ce2784c577664bf291e38a360d9682ba
+          created: 1768296664337
+          modified: 1768296998557
+          isPrivate: false
+          description: ""
+          sortKey: -1768296780883
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base }}/bookings"
+        name: Get User Bookings
+        meta:
+          id: req_4e0540c899214b47bd808f1b573a6a34
+          created: 1768296706064
+          modified: 1768296965438
+          isPrivate: false
+          description: ""
+          sortKey: -1768296780833
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base }}/bookings"
+        name: Add Bookings
+        meta:
+          id: req_a6ce787f68ac4226ab5789a013fb2427
+          created: 1768296718027
+          modified: 1768296991760
+          isPrivate: false
+          description: ""
+          sortKey: -1768296780858
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base }}/bookings/1313242343"
+        name: Update Bookings
+        meta:
+          id: req_3f4b6a2910a045d089ed760807b5bbd1
+          created: 1768296733514
+          modified: 1768296973473
+          isPrivate: false
+          description: ""
+          sortKey: -1768296780845.5
+        method: PUT
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base }}/bookings/123232445"
+        name: Delete Bookings
+        meta:
+          id: req_70adbfcb74e94ea8ac4d30177c55fdcd
+          created: 1768296744460
+          modified: 1768296981243
+          isPrivate: false
+          description: ""
+          sortKey: -1768296780851.75
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base }}/bookings/paged"
+        name: Get Bookings Paged
+        meta:
+          id: req_e7bbf821353e41eebab9d2c5ec2827e5
+          created: 1768296780783
+          modified: 1768296901809
+          isPrivate: false
+          description: ""
+          sortKey: -1768296780783
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Payments
+    meta:
+      id: fld_ee2f6c1dbec74ee49a56689fcad58bc7
+      created: 1768297034841
+      modified: 1768297034841
+      sortKey: -1768297034841
+      description: ""
+    children:
+      - url: "{{ _.base }}/payment/init"
+        name: "Init Payment "
+        meta:
+          id: req_29e9aac3d783451fb3e05cd2560eb414
+          created: 1768297038704
+          modified: 1768297139580
+          isPrivate: false
+          description: ""
+          sortKey: -1768297038704
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base }}/payment/checkout"
+        name: Checkout
+        meta:
+          id: req_018e566706ee4af2a679ae0f6d2b702c
+          created: 1768297105278
+          modified: 1768297154801
+          isPrivate: false
+          description: ""
+          sortKey: -1768296909793.5
+        method: POST
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
+            description: ""
+            disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base }}/paymens"
+        name: Get Payments
+        meta:
+          id: req_fc47c24c61ea49e7a1a3d2cc5ddcf466
+          created: 1768297177987
+          modified: 1768297187002
+          isPrivate: false
+          description: ""
+          sortKey: -1768296845338.25
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/12.2.0
             description: ""
             disabled: false
         settings:
@@ -335,17 +549,17 @@ collection:
 cookieJar:
   name: Default Jar
   meta:
-    id: jar_494424c1b21776ead2ceea9c879a367121e319bc
+    id: jar_4c024618425e4df5a9b2222d565c99f5
     created: 1767547127206
     modified: 1767547127206
 environments:
   name: Base Environment
   meta:
-    id: env_494424c1b21776ead2ceea9c879a367121e319bc
+    id: env_1658c54acbce4186bb7e3753e1386d2b
     created: 1767547127202
-    modified: 1768252894566
+    modified: 1768296544880
     isPrivate: false
   data:
     base: http://localhost:3000/api/v1
     token: Bearer
-      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3MTcyNmEwMC1jOTZiLTQxZDQtYmFjMS1mNzc3ZjhjNTA0YmEiLCJyb2xlIjoiQ1VTVE9NRVIiLCJlbWFpbCI6Impob25AZ21haWwuY29tIiwiaWF0IjoxNzY4MjUyODcwLCJleHAiOjE3NjgzMzkyNzB9.ZWQSE_5acdR6Rgxg360YTYatO6ZQD3DvENFtjQixjm8
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5ZWE5ZTBkMy0xNjcxLTRiYjItOGFjMy01ODhjZjZkZDRlNjUiLCJyb2xlIjoiQ1VTVE9NRVIiLCJlbWFpbCI6Impob25AZ21haWwuY29tIiwiaWF0IjoxNzY4Mjk2NTMwLCJleHAiOjE3NjgzODI5MzB9.tY0jOD9vLc70TLxHxuUcYQtpMdtjB0rb9_00Vf-Vrns
